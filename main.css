@@ -1,0 +1,25 @@
+:root {
+    --tiles--count-in-row: 4;
+    --tiles-gap: 16px;
+    --tile-width: 100px;
+    --tile-height: 100px;
+}
+
+body {
+    background-color: darkslategray;
+}
+
+.tiles {
+    margin: 48px auto;
+    width: max-content;
+    display: grid;
+    grid-template-columns: repeat(var(--tiles--count-in-row), var(--tile-width));
+    gap: var(--tiles-gap);
+    box-sizing: border-box;
+}
+
+.tile {
+    height: var(--tile-height);
+    background-color: black;
+    border: 5px solid dimgrey;
+}
