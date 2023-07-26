@@ -9,28 +9,52 @@
     >
     <title>Document</title>
     <link
-        href="main.css"
+        href="css/main.css"
+        rel="stylesheet"
+    >
+    <link
+        href="css/timer.css"
         rel="stylesheet"
     >
     <script
-        src="/js/utils.js"
+        src="js/utils.js"
         defer
     ></script>
     <script
-        src="/js/logicClass.js"
+        src="js/MatchGrid.js"
         defer
     ></script>
     <script
-        src="/js/main.js"
+        src="js/main.js"
+        defer
+    ></script>
+    <script
+        src="js/timer.js"
         defer
     ></script>
 </head>
 
 <body>
-    <button>Start</button>
-    <button>End</button>
-    <button>Replay</button>
-    <button>Pause whenever the mouse is outside of the activity</button>
+    <div>
+        <div class="timer">
+            <span class="hour">00</span>
+            :
+            <span class="minute">00</span>
+            :
+            <span class="second">10</span>
+        </div>
+        <div class="control">
+            <button onClick="timer.start();startNewGame()">Start</button>
+            <button onClick="timer.stop()">Pause</button>
+            <button onClick="timer.reset(60);timer.start(1000);startNewGame()">Replay</button>
+            <button onClick="timer.stop();timer.reset(0);">End</button>
+            <button onClick="timer.mode(1)">Count up</button>
+            <button onClick="timer.mode(0)">Count down</button>
+
+            <button>Pause whenever the mouse is outside of the activity</button>
+        </div>
+    </div>
+
     <div class="tiles"></div>
 </body>
 

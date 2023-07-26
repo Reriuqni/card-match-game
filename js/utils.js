@@ -1,8 +1,6 @@
 function getColors({ qtyColors }) {
     const randomColorList = getListOfHEX(qtyColors)
     const uniqColorList = removeDublicateAndFill(randomColorList)
-    // console.log('randomColorList', randomColorList.length)
-    // console.log('uniqColorList', uniqColorList.length)
 
     return uniqColorList
 
@@ -11,7 +9,11 @@ function getColors({ qtyColors }) {
     // Impl
 
     function generateHEXColor() {
-        return '#' + Math.floor(Math.random() * 2 ** 24).toString(16).padStart(6, "0")
+        return '#' +
+            Math
+                .floor(Math.random() * 2 ** 24)
+                .toString(16)
+                .padStart(6, "0")
     }
 
     function getListOfHEX(length) {

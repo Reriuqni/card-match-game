@@ -5,7 +5,7 @@ class MatchGrid {
         numberOfColumns,
         numberOfRows,
         timeLimitSeconds,
-        selectorTilesContainer = '.tiles'
+        selectorTilesContainer,
         // theme(colors, font, etc.)
     } = {}) {
         this.width = width
@@ -32,11 +32,29 @@ class MatchGrid {
     }
 
     init() {
-        this.setTileSize()
-        this.BuildTiles()
+        if (this.checkMinRequirements()) {
+            this.setTileSize()
+            this.BuildTiles()
+        }
     }
 
-    checkMinRequirements() { }
+    // timer() {
+    //     const stopTimer = setTimeout(() => {
+
+    //     }, this.timeLimitSeconds)
+    // }
+
+    /**
+     * 
+     * @returns fasle if params not align minimum requirements, otherwise true
+     */
+    checkMinRequirements() {
+        if (this.numberOfColumns < 1 || this.numberOfRows < 1) {
+            alert('Game not started.\nNumber of Columns or number of Rows should be more then zero.')
+            return false
+        }
+        return true
+    }
 
     setTileSize() {
         const root = document.documentElement;
