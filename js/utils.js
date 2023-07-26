@@ -1,7 +1,8 @@
-function getColors(xAxis, yAxis) {
-    const qtyColors = xAxis * yAxis
+function getColors({ qtyColors }) {
     const randomColorList = getListOfHEX(qtyColors)
     const uniqColorList = removeDublicateAndFill(randomColorList)
+    // console.log('randomColorList', randomColorList.length)
+    // console.log('uniqColorList', uniqColorList.length)
 
     return uniqColorList
 
