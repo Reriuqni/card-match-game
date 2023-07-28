@@ -1,8 +1,14 @@
-const GAME_NOT_STARTED = 0
-const GAME_IS_OVER_YOU_LOOSE = 1
+const GAME_NOT_STARTED = 0;
+const GAME_IS_OVER_YOU_LOOSE = 1;
 const GAME_IS_OVER_YOU_WIN = 2
-const GAME_IS_PLAYING = 3
-const GAME_PAUSED = 4
+const GAME_IS_PLAYING = 3;
+const GAME_PAUSED = 4;
+
+// Selectors
+const ID_BTN_START_GAME = 'btn-start';
+const ID_BTN_PAUSE_GAME = 'btn-pause';
+const ID_BTN_RESUME_GAME = 'btn-resume';
+
 
 class MatchGrid {
     constructor({
@@ -74,8 +80,8 @@ class MatchGrid {
 
     start() {
         this.gameStatus = GAME_IS_PLAYING
-        document.getElementById('btn-start').disabled = true
-        document.getElementById('btn-pause').disabled = false
+        document.getElementById(ID_BTN_START_GAME).disabled = true
+        document.getElementById(ID_BTN_PAUSE_GAME).disabled = false
         this.hideInfo()
         this._timer.start()
     }
@@ -83,8 +89,8 @@ class MatchGrid {
     pause() {
         if (this.gameStatus === GAME_IS_PLAYING) {
             this.gameStatus = GAME_PAUSED
-            document.getElementById('btn-resume').disabled = false
-            document.getElementById('btn-pause').disabled = true
+            document.getElementById(ID_BTN_RESUME_GAME).disabled = false
+            document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
             this.showInfo({ msg: 'Pause' })
             this._timer.stop()
         }
@@ -93,8 +99,8 @@ class MatchGrid {
     resume() {
         if (this.gameStatus === GAME_PAUSED) {
             this.gameStatus = GAME_IS_PLAYING
-            document.getElementById('btn-resume').disabled = true
-            document.getElementById('btn-pause').disabled = false
+            document.getElementById(ID_BTN_RESUME_GAME).disabled = true
+            document.getElementById(ID_BTN_PAUSE_GAME).disabled = false
             this.hideInfo()
             this._timer.start()
         }
@@ -102,9 +108,9 @@ class MatchGrid {
 
     replay() {
         game = startNewGame()
-        document.getElementById('btn-start').disabled = false
-        document.getElementById('btn-pause').disabled = true
-        document.getElementById('btn-resume').disabled = true
+        document.getElementById(ID_BTN_START_GAME).disabled = false
+        document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
+        document.getElementById(ID_BTN_RESUME_GAME).disabled = true
     }
 
     stop() {
@@ -145,9 +151,9 @@ class MatchGrid {
     }
 
     #activityButtonsGroup_1_disabled() {
-        document.getElementById('btn-start').disabled = true
-        document.getElementById('btn-pause').disabled = true
-        document.getElementById('btn-resume').disabled = true
+        document.getElementById(ID_BTN_START_GAME).disabled = true
+        document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
+        document.getElementById(ID_BTN_RESUME_GAME).disabled = true
     }
 
     /**
