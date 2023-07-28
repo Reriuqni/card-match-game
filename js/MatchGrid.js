@@ -6,35 +6,28 @@ const GAME_PAUSED = 4
 
 class MatchGrid {
     constructor({
-        widthPX = '100px',
-        heightPX = '100px',
+        widthPX = '50px',
+        heightPX = '50px',
         numberOfColumns,
         numberOfRows,
         timeLimitSeconds,
         tilesGap = '16px',
         selectorTilesContainer,
+        timeIntervalHideNotMatchedGrid
         // theme(colors, font, etc.)
     } = {}) {
         this.tilesGap = tilesGap
         this.tileWidth = widthPX
         this.tileHeight = heightPX
+        // setTileSizeByMeasuresTilesContainer({ width: widthPX, height: heightPX })
 
         this.numberOfColumns = numberOfColumns
         this.numberOfRows = numberOfRows
         this.timeLimitSeconds = timeLimitSeconds
+        this.timeIntervalHideNotMatchedGrid = timeIntervalHideNotMatchedGrid
         this.selectorTilesContainer = selectorTilesContainer
 
-        // const widthPxToInt = parseInt(width)
-        // const heightPxToInt = parseInt(height)
-        // this.tileWidth = Math.floor(widthPxToInt / numberOfColumns) + 'px'
-        // this.tileHeight = Math.floor(heightPxToInt / numberOfRows) + 'px'
-
-
-
         const colors = getColors({ qtyColors: numberOfColumns * numberOfRows / 2 });
-        // this.colorsPicklist = [...colors, ...colors];
-        // this.tileCount = this.colorsPicklist.length;
-
         const colorsWithNum = colors.map((color, idx) => { return { number: idx, color } });
         this.colorsPicklist = [...colorsWithNum, ...colorsWithNum];
         this.tileCount = this.colorsPicklist.length;
@@ -65,6 +58,18 @@ class MatchGrid {
             this.tilesHydrate()
             this.initTimer()
         }
+    }
+
+    /**
+     * In case when the params widthPX and heightPX is the width and height block of tiles.
+     * @param {*} width - width of the Tiles container in px 
+     * @param {*} width - height of the Tiles container in px 
+     */
+    setTileSizeByMeasuresTilesContainer({ width, height }) {
+        const widthPxToInt = parseInt(width)
+        const heightPxToInt = parseInt(height)
+        this.tileWidth = Math.floor(widthPxToInt / numberOfColumns) + 'px'
+        this.tileHeight = Math.floor(heightPxToInt / numberOfRows) + 'px'
     }
 
     start() {
@@ -103,10 +108,9 @@ class MatchGrid {
     }
 
     stop() {
-        document.getElementById('btn-start').disabled = true
-        document.getElementById('btn-pause').disabled = true
-        document.getElementById('btn-resume').disabled = true
+        this.#activityButtonsGroup_1_disabled()
         this._timer.reset(0)
+        this.showInfo({ msg: 'Game Ended' })
     }
 
     showInfo({ msg }) {
@@ -133,11 +137,17 @@ class MatchGrid {
     gameIsOver(time) {
         // The game not win yet and the time not over
         if (this.gameStatus != GAME_IS_OVER_YOU_WIN && time <= 0) {
-            alert("Time is out. Game Over.");
+            this.showInfo({ msg: 'Time is out. Game Over.' })
             this.gameStatus = GAME_IS_OVER_YOU_LOOSE;
+            this.#activityButtonsGroup_1_disabled()
             this._timer.stop()
-            // this.time().stop();
         }
+    }
+
+    #activityButtonsGroup_1_disabled() {
+        document.getElementById('btn-start').disabled = true
+        document.getElementById('btn-pause').disabled = true
+        document.getElementById('btn-resume').disabled = true
     }
 
     /**
@@ -238,8 +248,8 @@ class MatchGrid {
                     if (this.revealedCount === this.tileCount) {
                         this.gameStatus = GAME_IS_OVER_YOU_WIN
                         this._timer.stop();
-                        // alert("You win!");
                         this.showInfo({ msg: "You win!" })
+                        this.#activityButtonsGroup_1_disabled()
                     }
 
                     return;
@@ -254,7 +264,7 @@ class MatchGrid {
 
                     this.awaitingEndOfMove = false;
                     this.activeTile = null;
-                }, 1000);
+                }, this.timeIntervalHideNotMatchedGrid);
             })
         )
     }

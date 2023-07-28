@@ -2,7 +2,7 @@ function Timer({
     callback = () => { },
     time = 0,             //  The default time of the timer
     mode = 1,             //  Mode: count up or count down
-    interval = 1000,
+    interval = 1000,      //  1 seconds
 } = {}) {
     var status = 0;       //  Status: timer is running or stoped. The timer running (1) or stoped (0)
     let timer_id;         //  This is used by setInterval function
