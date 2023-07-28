@@ -1,0 +1,44 @@
+button {
+    padding: 4px;
+    border-radius: 4px;
+    min-width: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: var(--main-color);
+    border: 1px solid;
+    cursor: pointer;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+button {
+    --color: #8fc866;
+    --hover: #66c887;
+}
+
+button:hover,
+button:focus {
+    box-shadow: inset 6.5em 0 0 0 var(--hover);
+}
+
+button {
+    color: var(--color);
+    transition: 0.25s;
+}
+
+button:hover,
+button:focus {
+    border-color: var(--hover);
+    color: #fff;
+}
+
+button {
+    background: none;
+    border: 2px solid;
+    font: inherit;
+    line-height: 1;
+    margin: 0.5em;
+    padding: .6em 4px;
+}

@@ -13,6 +13,10 @@
         rel="stylesheet"
     >
     <link
+        href="css/button.css"
+        rel="stylesheet"
+    >
+    <link
         href="css/timer.css"
         rel="stylesheet"
     >
@@ -56,25 +60,15 @@
                     id="btn-start"
                 >Start</button>
                 <button
-                    onClick="game.resume()"
-                    id="btn-resume"
-                    disabled="true"
-                >Resume</button>
-                <button
                     onClick="game.pause()"
                     id="btn-pause"
-                    disabled="true"
                 >Pause</button>
+                <button
+                    onClick="game.resume()"
+                    id="btn-resume"
+                >Resume</button>
                 <button onClick="game.replay()">Replay</button>
                 <button onClick="game.stop()">End</button>
-                <!-- <button
-                    onClick="timer.mode(1)"
-                    disabled="true"
-                >Count up</button>
-                <button
-                    onClick="timer.mode(0)"
-                    disabled="true"
-                >Count down</button> -->
             </div>
         </div>
 

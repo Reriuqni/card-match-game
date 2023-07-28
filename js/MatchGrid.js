@@ -10,6 +10,8 @@ const ID_BTN_START_GAME = 'btn-start';
 const ID_BTN_PAUSE_GAME = 'btn-pause';
 const ID_BTN_RESUME_GAME = 'btn-resume';
 
+const CSS_CLASS_HIDE = 'display-none'
+
 const SELECTOR_TEXT_INFO = '.tiles--info--message'
 
 
@@ -65,6 +67,9 @@ class MatchGrid {
             this.setTileSize()
             this.BuildTiles()
             this.tilesHydrate()
+            document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
+            document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
+            document.getElementById(ID_BTN_START_GAME).classList.remove(CSS_CLASS_HIDE)
             this.initTimer()
         }
     }
@@ -84,17 +89,21 @@ class MatchGrid {
     start() {
         this.gameStatus = GAME_IS_PLAYING
         document.querySelector(SELECTOR_TEXT_INFO).innerHTML = ''
-        document.getElementById(ID_BTN_START_GAME).disabled = true
-        document.getElementById(ID_BTN_PAUSE_GAME).disabled = false
+        // document.getElementById(ID_BTN_START_GAME).disabled = true
+        document.getElementById(ID_BTN_START_GAME).classList.add(CSS_CLASS_HIDE)
+        document.getElementById(ID_BTN_PAUSE_GAME).classList.remove(CSS_CLASS_HIDE)
         this.hideInfo()
+        this.initTimer()
         this._timer.start()
     }
 
     pause({ pauseType = GAME_MANUAL_PAUSE } = {}) {
         if (this.gameStatus === GAME_IS_PLAYING) {
             this.gameStatus = pauseType
-            document.getElementById(ID_BTN_RESUME_GAME).disabled = false
-            document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
+            // document.getElementById(ID_BTN_RESUME_GAME).disabled = false
+            document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
+            document.getElementById(ID_BTN_START_GAME).classList.add(CSS_CLASS_HIDE)
+            document.getElementById(ID_BTN_RESUME_GAME).classList.remove(CSS_CLASS_HIDE)
             this.showInfo({ msg: 'Pause' })
             this._timer.stop()
         }
@@ -115,8 +124,8 @@ class MatchGrid {
     resume() {
         if (this.gameStatus === GAME_MANUAL_PAUSE || this.gameStatus === GAME_AUTO_PAUSE) {
             this.gameStatus = GAME_IS_PLAYING
-            document.getElementById(ID_BTN_RESUME_GAME).disabled = true
-            document.getElementById(ID_BTN_PAUSE_GAME).disabled = false
+            document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
+            document.getElementById(ID_BTN_PAUSE_GAME).classList.remove(CSS_CLASS_HIDE)
             this.hideInfo()
             this._timer.start()
         }
@@ -125,9 +134,10 @@ class MatchGrid {
     replay() {
         this._timer.reset(0)
         game = startNewGame()
-        document.getElementById(ID_BTN_START_GAME).disabled = false
-        document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
-        document.getElementById(ID_BTN_RESUME_GAME).disabled = true
+        document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
+        document.getElementById(ID_BTN_START_GAME).classList.remove(CSS_CLASS_HIDE)
+        document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
+        // document.getElementById(ID_BTN_RESUME_GAME).disabled = true
     }
 
     stop() {
@@ -199,7 +209,7 @@ class MatchGrid {
     gameIsOver(time) {
         // The game not win yet and the time not over
         if (this.gameStatus != GAME_IS_OVER_YOU_WIN && time <= 0) {
-            this.showInfo({ msg: 'Time is out. Game Over.' })
+            this.showInfo({ msg: 'Time out' })
             this.gameStatus = GAME_IS_OVER_YOU_LOOSE;
             this.#activityButtonsGroup_1_disabled()
             this._timer.stop()
@@ -207,9 +217,10 @@ class MatchGrid {
     }
 
     #activityButtonsGroup_1_disabled() {
-        document.getElementById(ID_BTN_START_GAME).disabled = true
-        document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
-        document.getElementById(ID_BTN_RESUME_GAME).disabled = true
+        document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
+        document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
+        document.getElementById(ID_BTN_START_GAME).classList.remove(CSS_CLASS_HIDE)
+        // document.getElementById(ID_BTN_RESUME_GAME).disabled = true
     }
 
     /**

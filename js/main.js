@@ -4,10 +4,8 @@ let game = startNewGame()
 const gameContainer = document.querySelector('.game-container');
 // docs: mouseover, mousedown, mousemove, mouseout, mouseup
 gameContainer.addEventListener('mouseenter', () => {
-    console.log(game.getStatus())
     if (game.getStatus() === GAME_AUTO_PAUSE) {
         game.resume()
-        console.log('enter')
     }
 }); //
 gameContainer.addEventListener('mouseleave', () => {
@@ -30,7 +28,7 @@ function startNewGame() {
         numberOfColumns: genNnumberOfColumns,  // Mock: random
         numberOfRows: genNumberOfRows,         // Mock: random
         tilesGap: '12px',
-        timeLimitSeconds: 1000,                // the time of game in seconds
+        timeLimitSeconds: 100,                // the time of game in seconds
         timeIntervalHideNotMatchedGrid: 1000,  // miliseconds to hide two not matched tiles
         selectorTilesContainer
         // theme(colors, font, etc.)

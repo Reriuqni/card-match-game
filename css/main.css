@@ -3,6 +3,8 @@
     --tiles-gap: 16px;
     --tile-width: 100px;
     --tile-height: 100px;
+
+    --main-color: wheat;
 }
 
 body {
@@ -36,7 +38,7 @@ body {
     justify-content: center;
     font-size: 40px;
     font-weight: 700;
-    color: wheat;
+    color: var(--main-color);
     /* #00fe77 */
     -webkit-box-reflect: below 0 linear-gradient(transparent, #0004);
     display: none;
@@ -45,6 +47,8 @@ body {
 .tiles--info.show {
     display: flex;
     overflow: hidden;
+    border: 1px solid #f5deb34a;
+    box-sizing: border-box;
 }
 
 
@@ -52,6 +56,7 @@ body {
 .tiles--info--message span {
     position: relative;
     display: inline-block;
+    text-transform: uppercase;
 }
 
 .tiles {
@@ -103,10 +108,9 @@ body {
 }
 
 .timer {
-    color: wheat;
+    color: var(--main-color);
 }
 
-button {
-    padding: 4px 12px;
-    border-radius: 4px;
+.display-none {
+    display: none;
 }
