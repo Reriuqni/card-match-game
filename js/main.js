@@ -1,6 +1,10 @@
 const selectorTilesContainer = '.tiles'
 let game = startNewGame()
 
+const gameContainer = document.querySelector('.game-container');
+gameContainer.addEventListener('mouseenter', () => game.resume()); //mouseover, mousedown, mousemove
+gameContainer.addEventListener('mouseleave', () => game.pause()); //mouseout, mouseup
+
 function startNewGame() {
     const {
         genNnumberOfColumns,
@@ -10,10 +14,13 @@ function startNewGame() {
     document.querySelector(selectorTilesContainer).innerHTML = ''
 
     return new MatchGrid({
-        widthPX: '40px',
-        heightPX: '60px',
+        widthPX: '20px',
+        heightPX: '24px',
         numberOfColumns: genNnumberOfColumns,
         numberOfRows: genNumberOfRows,
+        // numberOfColumns: 16,
+        // numberOfRows: 2,
+        tilesGap: '12px',
         timeLimitSeconds: 100,
         selectorTilesContainer
         // theme(colors, font, etc.)
@@ -22,7 +29,7 @@ function startNewGame() {
 
 function generateMockData() {
     const minТumberOfColumns = 2
-    const randomNumberOfColumns = 5
+    const randomNumberOfColumns = 15
     const genNnumberOfColumns = Math.floor(Math.random() * randomNumberOfColumns) + minТumberOfColumns
 
     // Genarate random number rows
@@ -38,3 +45,5 @@ function generateMockData() {
         genNumberOfRows,
     }
 }
+
+

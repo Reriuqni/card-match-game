@@ -6,25 +6,30 @@ const GAME_PAUSED = 4
 
 class MatchGrid {
     constructor({
-        width = '100px',
-        height = '100px',
+        widthPX = '100px',
+        heightPX = '100px',
         numberOfColumns,
         numberOfRows,
         timeLimitSeconds,
+        tilesGap = '16px',
         selectorTilesContainer,
         // theme(colors, font, etc.)
     } = {}) {
-        this.width = width
-        this.height = height
+        this.tilesGap = tilesGap
+        this.tileWidth = widthPX
+        this.tileHeight = heightPX
+
         this.numberOfColumns = numberOfColumns
         this.numberOfRows = numberOfRows
         this.timeLimitSeconds = timeLimitSeconds
         this.selectorTilesContainer = selectorTilesContainer
 
-        const widthPxToInt = parseInt(width)
-        const heightPxToInt = parseInt(height)
-        this.tileWidth = Math.floor(widthPxToInt / numberOfColumns) + 'px'
-        this.tileHeight = Math.floor(heightPxToInt / numberOfRows) + 'px'
+        // const widthPxToInt = parseInt(width)
+        // const heightPxToInt = parseInt(height)
+        // this.tileWidth = Math.floor(widthPxToInt / numberOfColumns) + 'px'
+        // this.tileHeight = Math.floor(heightPxToInt / numberOfRows) + 'px'
+
+
 
         const colors = getColors({ qtyColors: numberOfColumns * numberOfRows / 2 });
         // this.colorsPicklist = [...colors, ...colors];
@@ -33,9 +38,6 @@ class MatchGrid {
         const colorsWithNum = colors.map((color, idx) => { return { number: idx, color } });
         this.colorsPicklist = [...colorsWithNum, ...colorsWithNum];
         this.tileCount = this.colorsPicklist.length;
-        console.log(colors)
-        console.log(this.colorsPicklist)
-        this.colorsPicklist.forEach(console.log)
 
         this.revealedCount = 0;
         this.activeTile = null;
@@ -57,6 +59,7 @@ class MatchGrid {
 
     init() {
         if (this.checkMinRequirements()) {
+            this.showInfo({ msg: "Press 'Start'" })
             this.setTileSize()
             this.BuildTiles()
             this.tilesHydrate()
@@ -68,21 +71,28 @@ class MatchGrid {
         this.gameStatus = GAME_IS_PLAYING
         document.getElementById('btn-start').disabled = true
         document.getElementById('btn-pause').disabled = false
+        this.hideInfo()
         this._timer.start()
     }
 
     pause() {
-        this.gameStatus = GAME_PAUSED
-        document.getElementById('btn-resume').disabled = false
-        document.getElementById('btn-pause').disabled = true
-        this._timer.stop()
+        if (this.gameStatus === GAME_IS_PLAYING) {
+            this.gameStatus = GAME_PAUSED
+            document.getElementById('btn-resume').disabled = false
+            document.getElementById('btn-pause').disabled = true
+            this.showInfo({ msg: 'Pause' })
+            this._timer.stop()
+        }
     }
 
     resume() {
-        this.gameStatus = GAME_IS_PLAYING
-        document.getElementById('btn-resume').disabled = true
-        document.getElementById('btn-pause').disabled = false
-        this._timer.start()
+        if (this.gameStatus === GAME_PAUSED) {
+            this.gameStatus = GAME_IS_PLAYING
+            document.getElementById('btn-resume').disabled = true
+            document.getElementById('btn-pause').disabled = false
+            this.hideInfo()
+            this._timer.start()
+        }
     }
 
     replay() {
@@ -97,6 +107,15 @@ class MatchGrid {
         document.getElementById('btn-pause').disabled = true
         document.getElementById('btn-resume').disabled = true
         this._timer.reset(0)
+    }
+
+    showInfo({ msg }) {
+        document.querySelector('.tiles--info').classList.add('show')
+        document.querySelector('.tiles--info--message').innerHTML = msg
+    }
+
+    hideInfo() {
+        document.querySelector('.tiles--info').classList.remove('show')
     }
 
     initTimer() {
@@ -137,6 +156,7 @@ class MatchGrid {
         const root = document.documentElement;
         root.style.setProperty('--tile-width', this.tileWidth);
         root.style.setProperty('--tile-height', this.tileHeight);
+        root.style.setProperty('--tiles-gap', this.tilesGap);
         root.style.setProperty('--tiles--count-in-row', this.numberOfColumns);
     }
 
@@ -217,9 +237,9 @@ class MatchGrid {
 
                     if (this.revealedCount === this.tileCount) {
                         this.gameStatus = GAME_IS_OVER_YOU_WIN
-                        // this.time().stop();
                         this._timer.stop();
-                        alert("You win!");
+                        // alert("You win!");
+                        this.showInfo({ msg: "You win!" })
                     }
 
                     return;

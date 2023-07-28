@@ -35,45 +35,50 @@
 </head>
 
 <body>
-    <div>
-        <div class="timer">
-            <span class="hour">00</span>
-            :
-            <span class="minute">00</span>
-            :
-            <span class="second">10</span>
+    <div class="game-container">
+        <div class="activity">
+            <div class="timer">
+                <span class="hour">00</span>
+                :
+                <span class="minute">00</span>
+                :
+                <span class="second">10</span>
+            </div>
+            <div class="control">
+                <button
+                    onClick="game.start()"
+                    id="btn-start"
+                >Start</button>
+                <button
+                    onClick="game.resume()"
+                    id="btn-resume"
+                    disabled="true"
+                >Resume</button>
+                <button
+                    onClick="game.pause()"
+                    id="btn-pause"
+                    disabled="true"
+                >Pause</button>
+                <button onClick="game.replay()">Replay</button>
+                <button onClick="game.stop()">End</button>
+                <!-- <button
+                    onClick="timer.mode(1)"
+                    disabled="true"
+                >Count up</button>
+                <button
+                    onClick="timer.mode(0)"
+                    disabled="true"
+                >Count down</button> -->
+            </div>
         </div>
-        <div class="control">
-            <button
-                onClick="game.start()"
-                id="btn-start"
-            >Start</button>
-            <button
-                onClick="game.resume()"
-                id="btn-resume"
-                disabled="true"
-            >Resume</button>
-            <button
-                onClick="game.pause()"
-                id="btn-pause"
-                disabled="true"
-            >Pause</button>
-            <button onClick="game.replay()">Replay</button>
-            <button onClick="game.stop()">End</button>
-            <!-- <button
-                onClick="timer.mode(1)"
-                disabled="true"
-            >Count up</button>
-            <button
-                onClick="timer.mode(0)"
-                disabled="true"
-            >Count down</button> -->
 
-            <button>Pause whenever the mouse is outside of the activity</button>
+        <div class="tiles-container">
+            <div class="tiles--info">
+                <span class="tiles--info--message"></span>
+            </div>
+            <div class="tiles"></div>
         </div>
     </div>
-
-    <div class="tiles"></div>
 </body>
 
 </html>
