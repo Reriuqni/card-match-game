@@ -78,6 +78,7 @@ body {
     cursor: pointer;
     font-weight: 700;
     font-size: 1.2em;
+    border-radius: 4px;
 }
 
 .tile[data-revealed="false"] span {
@@ -107,9 +108,6 @@ body {
     padding: 16px;
 }
 
-.timer {
-    color: var(--main-color);
-}
 
 .display-none {
     display: none;

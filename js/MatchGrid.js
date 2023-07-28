@@ -336,7 +336,7 @@ class MatchGrid {
                     this.activeTile.style.backgroundColor = null;
                     element.style.backgroundColor = null;
                     this.animateTile({ target: this.activeTile, color: null, borderRadius: ['50%', '0%'] })
-                    this.animateTile({ target: element, color: null, borderRadius: ['50%', '0%'] })
+                    this.animateTile({ target: element, color: null, borderRadius: ['50%', '4px'] })
 
                     this.awaitingEndOfMove = false;
                     this.activeTile = null;
