@@ -10,9 +10,10 @@ const ID_BTN_START_GAME = 'btn-start';
 const ID_BTN_PAUSE_GAME = 'btn-pause';
 const ID_BTN_RESUME_GAME = 'btn-resume';
 
-const CSS_CLASS_HIDE = 'display-none'
+const CSS_CLASS_HIDE = 'display-none';
 
-const SELECTOR_TEXT_INFO = '.tiles--info--message'
+const SELECTOR_TEXT_INFO = '.tiles--info--message';
+const TILE_CLASS_NO_SHADOW = 'no-shadow';
 
 
 class MatchGrid {
@@ -298,6 +299,7 @@ class MatchGrid {
 
                 // Reveal this color
                 element.style.backgroundColor = color;
+                element.classList.add(TILE_CLASS_NO_SHADOW)
                 this.animateTile({ target: element, color })
 
                 // Перший клік
@@ -335,8 +337,10 @@ class MatchGrid {
                 setTimeout(() => {
                     this.activeTile.style.backgroundColor = null;
                     element.style.backgroundColor = null;
-                    this.animateTile({ target: this.activeTile, color: null, borderRadius: ['50%', '0%'] })
+                    this.animateTile({ target: this.activeTile, color: null, borderRadius: ['50%', '4px'] })
                     this.animateTile({ target: element, color: null, borderRadius: ['50%', '4px'] })
+                    this.activeTile.classList.remove(TILE_CLASS_NO_SHADOW)
+                    element.classList.remove(TILE_CLASS_NO_SHADOW)
 
                     this.awaitingEndOfMove = false;
                     this.activeTile = null;
