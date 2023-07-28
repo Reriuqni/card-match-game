@@ -2,8 +2,17 @@ const selectorTilesContainer = '.tiles'
 let game = startNewGame()
 
 const gameContainer = document.querySelector('.game-container');
-gameContainer.addEventListener('mouseenter', () => game.resume()); //mouseover, mousedown, mousemove
-gameContainer.addEventListener('mouseleave', () => game.pause()); //mouseout, mouseup
+// docs: mouseover, mousedown, mousemove, mouseout, mouseup
+gameContainer.addEventListener('mouseenter', () => {
+    console.log(game.getStatus())
+    if (game.getStatus() === GAME_AUTO_PAUSE) {
+        game.resume()
+        console.log('enter')
+    }
+}); //
+gameContainer.addEventListener('mouseleave', () => {
+    game.pauseLeaveActivity()
+});
 
 function startNewGame() {
     const {

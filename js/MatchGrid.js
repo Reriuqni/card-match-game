@@ -2,7 +2,8 @@ const GAME_NOT_STARTED = 0;
 const GAME_IS_OVER_YOU_LOOSE = 1;
 const GAME_IS_OVER_YOU_WIN = 2
 const GAME_IS_PLAYING = 3;
-const GAME_PAUSED = 4;
+const GAME_MANUAL_PAUSE = 4;
+const GAME_AUTO_PAUSE = 5;
 
 // Selectors
 const ID_BTN_START_GAME = 'btn-start';
@@ -48,7 +49,7 @@ class MatchGrid {
         // 1 - game is over, you loose
         // 2 - you win the game
         // 3 - the game paused
-        // 4 - GAME_PAUSED
+        // 4 - GAME_MANUAL_PAUSE
         this.gameStatus = GAME_NOT_STARTED
 
         this.init()
@@ -89,9 +90,9 @@ class MatchGrid {
         this._timer.start()
     }
 
-    pause() {
+    pause({ pauseType = GAME_MANUAL_PAUSE } = {}) {
         if (this.gameStatus === GAME_IS_PLAYING) {
-            this.gameStatus = GAME_PAUSED
+            this.gameStatus = pauseType
             document.getElementById(ID_BTN_RESUME_GAME).disabled = false
             document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
             this.showInfo({ msg: 'Pause' })
@@ -99,8 +100,20 @@ class MatchGrid {
         }
     }
 
+    pauseLeaveActivity() {
+        if (this.gameStatus !== GAME_MANUAL_PAUSE) {
+            this.pause({ pauseType: GAME_AUTO_PAUSE })
+        }
+    }
+
+    resumeLeaveActivity() {
+        if (this.gameStatus !== GAME_MANUAL_PAUSE) {
+            this.resume()
+        }
+    }
+
     resume() {
-        if (this.gameStatus === GAME_PAUSED) {
+        if (this.gameStatus === GAME_MANUAL_PAUSE || this.gameStatus === GAME_AUTO_PAUSE) {
             this.gameStatus = GAME_IS_PLAYING
             document.getElementById(ID_BTN_RESUME_GAME).disabled = true
             document.getElementById(ID_BTN_PAUSE_GAME).disabled = false
@@ -123,6 +136,13 @@ class MatchGrid {
         this.showInfo({ msg: 'Game Ended' })
     }
 
+    getStatus() {
+        return this.gameStatus;
+    }
+    setStatus(status) {
+        this.gameStatus = status;
+    }
+
     showInfo({ msg }) {
         document.querySelector('.tiles--info').classList.add('show')
         document.querySelector(SELECTOR_TEXT_INFO).innerHTML = msg
@@ -132,6 +152,7 @@ class MatchGrid {
     hideInfo() {
         document.querySelector('.tiles--info').classList.remove('show')
     }
+
 
     animateTextInfo() {
         const textEl = document.querySelector(SELECTOR_TEXT_INFO)
@@ -247,7 +268,7 @@ class MatchGrid {
                 if (this.gameStatus === GAME_IS_OVER_YOU_LOOSE) {
                     return;
                 }
-                if (this.gameStatus === GAME_PAUSED) {
+                if (this.gameStatus === GAME_MANUAL_PAUSE) {
                     return;
                 }
 
