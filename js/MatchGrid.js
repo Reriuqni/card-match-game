@@ -107,6 +107,7 @@ class MatchGrid {
     }
 
     replay() {
+        this._timer.reset(0)
         game = startNewGame()
         document.getElementById(ID_BTN_START_GAME).disabled = false
         document.getElementById(ID_BTN_PAUSE_GAME).disabled = true
@@ -231,6 +232,7 @@ class MatchGrid {
 
                 // Reveal this color
                 element.style.backgroundColor = color;
+                this.animateTile({ target: element, color })
 
                 // Перший клік
                 // Або перший клік після відкритої пари
@@ -267,6 +269,8 @@ class MatchGrid {
                 setTimeout(() => {
                     this.activeTile.style.backgroundColor = null;
                     element.style.backgroundColor = null;
+                    this.animateTile({ target: this.activeTile, color: null, borderRadius: ['50%', '0%'] })
+                    this.animateTile({ target: element, color: null, borderRadius: ['50%', '0%'] })
 
                     this.awaitingEndOfMove = false;
                     this.activeTile = null;
@@ -275,4 +279,13 @@ class MatchGrid {
         )
     }
 
+    animateTile({ target, color, borderRadius = ['0%', '50%'] } = {}) {
+        anime({
+            targets: target,
+            backgroundColor: color,
+            borderRadius: borderRadius,
+            easing: 'easeInOutQuad',
+            duration: 150
+        });
+    }
 }

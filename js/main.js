@@ -18,11 +18,11 @@ function startNewGame() {
         heightPX: '40px',
         numberOfColumns: genNnumberOfColumns,
         numberOfRows: genNumberOfRows,
-        numberOfColumns: 2,
-        numberOfRows: 2,
+        numberOfColumns: 3,
+        numberOfRows: 3,
         tilesGap: '12px',
-        timeLimitSeconds: 10,                // the time of game in seconds
-        timeIntervalHideNotMatchedGrid: 500, // miliseconds to hide two not matched tiles
+        timeLimitSeconds: 1000,                // the time of game in seconds
+        timeIntervalHideNotMatchedGrid: 2000, // miliseconds to hide two not matched tiles
         selectorTilesContainer
         // theme(colors, font, etc.)
     });
