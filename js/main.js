@@ -14,15 +14,15 @@ function startNewGame() {
     document.querySelector(selectorTilesContainer).innerHTML = ''
 
     return new MatchGrid({
-        widthPX: '30px',
+        widthPX: '40px',
         heightPX: '40px',
-        numberOfColumns: genNnumberOfColumns,
-        numberOfRows: genNumberOfRows,
-        numberOfColumns: 3,
-        numberOfRows: 3,
+        // numberOfColumns: 3,
+        // numberOfRows: 3,
+        numberOfColumns: genNnumberOfColumns,  // Mock: random
+        numberOfRows: genNumberOfRows,         // Mock: random
         tilesGap: '12px',
         timeLimitSeconds: 1000,                // the time of game in seconds
-        timeIntervalHideNotMatchedGrid: 2000, // miliseconds to hide two not matched tiles
+        timeIntervalHideNotMatchedGrid: 1000,  // miliseconds to hide two not matched tiles
         selectorTilesContainer
         // theme(colors, font, etc.)
     });
