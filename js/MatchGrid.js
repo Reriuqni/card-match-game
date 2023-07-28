@@ -9,6 +9,8 @@ const ID_BTN_START_GAME = 'btn-start';
 const ID_BTN_PAUSE_GAME = 'btn-pause';
 const ID_BTN_RESUME_GAME = 'btn-resume';
 
+const SELECTOR_TEXT_INFO = '.tiles--info--message'
+
 
 class MatchGrid {
     constructor({
@@ -80,6 +82,7 @@ class MatchGrid {
 
     start() {
         this.gameStatus = GAME_IS_PLAYING
+        document.querySelector(SELECTOR_TEXT_INFO).innerHTML = ''
         document.getElementById(ID_BTN_START_GAME).disabled = true
         document.getElementById(ID_BTN_PAUSE_GAME).disabled = false
         this.hideInfo()
@@ -122,11 +125,42 @@ class MatchGrid {
 
     showInfo({ msg }) {
         document.querySelector('.tiles--info').classList.add('show')
-        document.querySelector('.tiles--info--message').innerHTML = msg
+        document.querySelector(SELECTOR_TEXT_INFO).innerHTML = msg
+        this.animateTextInfo()
     }
 
     hideInfo() {
         document.querySelector('.tiles--info').classList.remove('show')
+    }
+
+    animateTextInfo() {
+        const textEl = document.querySelector(SELECTOR_TEXT_INFO)
+        textEl.innerHTML = textEl.textContent.replace(/\S/g, '<span>$&</span>')
+
+        if (anime) {
+            anime
+                .timeline({
+                    loop: true
+                })
+                .add({
+                    targets: `${SELECTOR_TEXT_INFO} span`,
+                    trannslateY: [-60, 0],
+                    scale: [10, 1],
+                    opacity: [0, 1],
+                    easing: "easeOutExpo",
+                    duration: 1500,
+                    delay: anime.stagger(100),
+                })
+                .add({
+                    targets: `${SELECTOR_TEXT_INFO} span`,
+                    trannslateX: [0, 0],
+                    scale: [1, 0],
+                    opacity: [1, 1],
+                    easing: "easeOutExpo",
+                    duration: 2000,
+                    delay: anime.stagger(100),
+                })
+        }
     }
 
     initTimer() {
@@ -280,12 +314,14 @@ class MatchGrid {
     }
 
     animateTile({ target, color, borderRadius = ['0%', '50%'] } = {}) {
-        anime({
-            targets: target,
-            backgroundColor: color,
-            borderRadius: borderRadius,
-            easing: 'easeInOutQuad',
-            duration: 150
-        });
+        if (anime) {
+            anime({
+                targets: target,
+                backgroundColor: color,
+                borderRadius: borderRadius,
+                easing: 'easeInOutQuad',
+                duration: 150
+            });
+        }
     }
 }

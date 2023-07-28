@@ -21,7 +21,7 @@ body {
 .tiles-container {
     max-width: 80vw;
     margin: 32px auto 0;
-    border: 2px dashed darkgray;
+    /* border: 2px dashed darkgray; */
     overflow: auto;
     position: relative;
 }
@@ -37,11 +37,21 @@ body {
     font-size: 40px;
     font-weight: 700;
     color: wheat;
+    /* #00fe77 */
+    -webkit-box-reflect: below 0 linear-gradient(transparent, #0004);
     display: none;
 }
 
 .tiles--info.show {
     display: flex;
+    overflow: hidden;
+}
+
+
+
+.tiles--info--message span {
+    position: relative;
+    display: inline-block;
 }
 
 .tiles {
@@ -90,4 +100,13 @@ body {
 .game-container {
     border: 1px solid gray;
     padding: 16px;
+}
+
+.timer {
+    color: wheat;
+}
+
+button {
+    padding: 4px 12px;
+    border-radius: 4px;
 }
