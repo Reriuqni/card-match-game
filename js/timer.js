@@ -87,9 +87,3 @@ function Timer({
         document.querySelector('div.timer span.hour').innerHTML = hour;
     }
 }
-
-// var timer = new Timer({
-//     time: 7,
-//     mode: 0,
-// });
-
