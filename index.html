@@ -25,11 +25,11 @@
         defer
     ></script>
     <script
-        src="js/main.js"
+        src="js/timer.js"
         defer
     ></script>
     <script
-        src="js/timer.js"
+        src="js/main.js"
         defer
     ></script>
 </head>
@@ -44,12 +44,30 @@
             <span class="second">10</span>
         </div>
         <div class="control">
-            <button onClick="timer.start();startNewGame()">Start</button>
-            <button onClick="timer.stop()">Pause</button>
-            <button onClick="timer.reset(60);timer.start(1000);startNewGame()">Replay</button>
-            <button onClick="timer.stop();timer.reset(0);">End</button>
-            <button onClick="timer.mode(1)">Count up</button>
-            <button onClick="timer.mode(0)">Count down</button>
+            <button
+                onClick="game.start()"
+                id="btn-start"
+            >Start</button>
+            <button
+                onClick="game.resume()"
+                id="btn-resume"
+                disabled="true"
+            >Resume</button>
+            <button
+                onClick="game.pause()"
+                id="btn-pause"
+                disabled="true"
+            >Pause</button>
+            <button onClick="game.replay()">Replay</button>
+            <button onClick="game.stop()">End</button>
+            <!-- <button
+                onClick="timer.mode(1)"
+                disabled="true"
+            >Count up</button>
+            <button
+                onClick="timer.mode(0)"
+                disabled="true"
+            >Count down</button> -->
 
             <button>Pause whenever the mouse is outside of the activity</button>
         </div>

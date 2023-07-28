@@ -22,4 +22,16 @@ body {
     height: var(--tile-height);
     background-color: black;
     border: 5px solid dimgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile[data-revealed="false"] span {
+    opacity: 0;
+}
+
+.tile[data-revealed="true"] span {
+    opacity: 1;
+    color: white;
 }
