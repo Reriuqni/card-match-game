@@ -48,11 +48,6 @@ class MatchGrid {
         this.activeTile = null;
         this.awaitingEndOfMove = false;
 
-        // 0 - GAME_NOT_STARTED
-        // 1 - game is over, you loose
-        // 2 - you win the game
-        // 3 - the game paused
-        // 4 - GAME_MANUAL_PAUSE
         this.gameStatus = GAME_NOT_STARTED
 
         this.init()
@@ -76,8 +71,8 @@ class MatchGrid {
     }
 
     /**
-     * In case when the params widthPX and heightPX is the width and height block of tiles.
-     * @param {*} width - width of the Tiles container in px 
+     * In case when the params widthPX and heightPX is the width and height block of tiles
+     * @param {*} width - width of the Tiles container in px
      * @param {*} width - height of the Tiles container in px 
      */
     setTileSizeByMeasuresTilesContainer({ width, height }) {
@@ -90,7 +85,6 @@ class MatchGrid {
     start() {
         this.gameStatus = GAME_IS_PLAYING
         document.querySelector(SELECTOR_TEXT_INFO).innerHTML = ''
-        // document.getElementById(ID_BTN_START_GAME).disabled = true
         document.getElementById(ID_BTN_START_GAME).classList.add(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_PAUSE_GAME).classList.remove(CSS_CLASS_HIDE)
         this.hideInfo()
@@ -101,7 +95,6 @@ class MatchGrid {
     pause({ pauseType = GAME_MANUAL_PAUSE } = {}) {
         if (this.gameStatus === GAME_IS_PLAYING) {
             this.gameStatus = pauseType
-            // document.getElementById(ID_BTN_RESUME_GAME).disabled = false
             document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
             document.getElementById(ID_BTN_START_GAME).classList.add(CSS_CLASS_HIDE)
             document.getElementById(ID_BTN_RESUME_GAME).classList.remove(CSS_CLASS_HIDE)
@@ -138,7 +131,6 @@ class MatchGrid {
         document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_START_GAME).classList.remove(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
-        // document.getElementById(ID_BTN_RESUME_GAME).disabled = true
     }
 
     stop() {
@@ -221,7 +213,6 @@ class MatchGrid {
         document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_START_GAME).classList.remove(CSS_CLASS_HIDE)
-        // document.getElementById(ID_BTN_RESUME_GAME).disabled = true
     }
 
     /**
@@ -244,6 +235,21 @@ class MatchGrid {
         root.style.setProperty('--tiles--count-in-row', this.numberOfColumns);
     }
 
+    animateTile({ target, color, borderRadius = ['0%', '50%'] } = {}) {
+        if (anime) {
+            anime({
+                targets: target,
+                backgroundColor: color,
+                borderRadius: borderRadius,
+                easing: 'easeInOutQuad',
+                duration: 150
+            });
+        }
+    }
+
+    // logic of the Game
+    // logic of the Game
+    // logic of the Game
     BuildTiles() {
         for (let i = 0; i < this.tileCount; i++) {
             const randomIndex = Math.floor(Math.random() * this.colorsPicklist.length);
@@ -287,11 +293,10 @@ class MatchGrid {
                 const revealed = element.getAttribute("data-revealed");
 
                 if (
-                    // Ознака, того, що таймер в одну секунду ще не завершився.
-                    // Всі кліки не обробляються
+                    // A sign that the one-second timer has not yet expired. All clicks are not processed
                     this.awaitingEndOfMove
                     || revealed === "true"
-                    // Клікнута картка та ж сама, що була відкрита на попередньому кроці
+                    // The card clicked is the same one that was opened in the previous step
                     || element == this.activeTile
                 ) {
                     return;
@@ -302,8 +307,8 @@ class MatchGrid {
                 element.classList.add(TILE_CLASS_NO_SHADOW)
                 this.animateTile({ target: element, color })
 
-                // Перший клік
-                // Або перший клік після відкритої пари
+                // The first click on the hide tile
+                // Or the first click after revealed pair tiles 
                 if (!this.activeTile) {
                     this.activeTile = element;
 
@@ -311,9 +316,9 @@ class MatchGrid {
                 }
 
                 const colorToMatch = this.activeTile.getAttribute("data-color");
-                // Якщо поточний колір карти === попередньому кольору
+                // If current map color === previous color
                 if (colorToMatch === color) {
-                    // Ознака, що картка відкрита і не буде надалі оброблятися
+                    // A sign that the card is open and will not be processed further
                     element.setAttribute("data-revealed", "true");
                     this.activeTile.setAttribute("data-revealed", "true");
 
@@ -333,7 +338,7 @@ class MatchGrid {
 
                 this.awaitingEndOfMove = true;
 
-                // Дві картки кольорів не співпали
+                // The colors of two open cards did not match
                 setTimeout(() => {
                     this.activeTile.style.backgroundColor = null;
                     element.style.backgroundColor = null;
@@ -348,16 +353,7 @@ class MatchGrid {
             })
         )
     }
-
-    animateTile({ target, color, borderRadius = ['0%', '50%'] } = {}) {
-        if (anime) {
-            anime({
-                targets: target,
-                backgroundColor: color,
-                borderRadius: borderRadius,
-                easing: 'easeInOutQuad',
-                duration: 150
-            });
-        }
-    }
+    // logic of the Game
+    // logic of the Game
+    // logic of the Game
 }
