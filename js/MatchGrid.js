@@ -9,6 +9,7 @@ const GAME_AUTO_PAUSE = 5;
 const ID_BTN_START_GAME = 'btn-start';
 const ID_BTN_PAUSE_GAME = 'btn-pause';
 const ID_BTN_RESUME_GAME = 'btn-resume';
+const ID_BTN_END_GAME = 'btn-end';
 
 const CSS_CLASS_HIDE = 'display-none';
 
@@ -66,6 +67,7 @@ class MatchGrid {
             document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
             document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
             document.getElementById(ID_BTN_START_GAME).classList.remove(CSS_CLASS_HIDE)
+            document.getElementById(ID_BTN_END_GAME).classList.remove(CSS_CLASS_HIDE)
             this.initTimer()
         }
     }
@@ -87,6 +89,7 @@ class MatchGrid {
         document.querySelector(SELECTOR_TEXT_INFO).innerHTML = ''
         document.getElementById(ID_BTN_START_GAME).classList.add(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_PAUSE_GAME).classList.remove(CSS_CLASS_HIDE)
+        document.getElementById(ID_BTN_END_GAME).classList.remove(CSS_CLASS_HIDE)
         this.hideInfo()
         this.initTimer()
         this._timer.start()
@@ -213,6 +216,7 @@ class MatchGrid {
         document.getElementById(ID_BTN_PAUSE_GAME).classList.add(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_RESUME_GAME).classList.add(CSS_CLASS_HIDE)
         document.getElementById(ID_BTN_START_GAME).classList.remove(CSS_CLASS_HIDE)
+        document.getElementById(ID_BTN_END_GAME).classList.add(CSS_CLASS_HIDE)
     }
 
     /**
@@ -331,6 +335,7 @@ class MatchGrid {
                         this._timer.stop();
                         this.showInfo({ msg: "You win!" })
                         this.#activityButtonsGroup_1_disabled()
+                        document.getElementById(ID_BTN_START_GAME).classList.add(CSS_CLASS_HIDE)
                     }
 
                     return;
